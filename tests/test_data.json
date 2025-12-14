@@ -1,0 +1,30 @@
+{
+    "tests": [
+        {
+            "test_name": "Over Budget Scenario - Hardware",
+            "user_id": "TEST_U1",
+            "initial_db_state": {
+                "budget_limit": 500.00,
+                "category": "Hardware",
+                "pre_expense_amount": 0.00
+            },
+            "test_input": {
+                "expense_text": "I just put $520.00 on my card at BestBuy for a new monitor for the office."
+            },
+            "expected_output_fragment": "OVER BUDGET"
+        },
+        {
+            "test_name": "Within Budget Scenario - Meals (Positive)",
+            "user_id": "TEST_U2",
+            "initial_db_state": {
+                "budget_limit": 100.00,
+                "category": "Meals",
+                "pre_expense_amount": 0.00
+            },
+            "test_input": {
+                "expense_text": "Log $45.50 for lunch at Cafe Central under Meals."
+            },
+            "expected_output_fragment": "Under Budget"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard] # The server that runs FastAPI
+google-genai      # Gemini API SDK
+sqlmodel          # (Recommended ORM for SQLite/FastAPI)
+python-dotenv     # To load the API key safely
+httpx             # Used for the e2e test script

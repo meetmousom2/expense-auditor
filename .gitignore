@@ -1,0 +1,6 @@
+# .gitignore content
+.venv/
+.idea/
+__pycache__/
+agent/__pycache__/
+tests/__pycache__/
