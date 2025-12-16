@@ -1,7 +1,8 @@
 # agent/tools.py
 from sqlmodel import select
 from .db import Expense, Budget, get_db_engine, Session, engine
-from typing import Optional
+from google import genai
+from google.genai import types
 
 # ----------------------------------------------------
 # 1. CORE Tool Functions (Private, accepts all args: user_id, db_engine)
@@ -57,3 +58,27 @@ def check_budget_tool(category: str): # Removed -> dict
     # This is the SCHEMA blueprint for Gemini.
     return {}
 
+TOOL_REGISTRY = {
+    "log_expense_tool": _log_expense_core,
+    "check_budget_tool": _check_budget_core,
+}
+
+def get_available_tool_declarations(client: genai.Client) -> list:
+    """Generates the list of Gemini API Tool declarations."""
+    log_expense_declaration = types.FunctionDeclaration.from_callable(
+        callable=log_expense_tool,
+        client=client
+    )
+
+    check_budget_declaration = types.FunctionDeclaration.from_callable(
+        callable=check_budget_tool,
+        client=client
+    )
+
+    available_tools = [
+        types.Tool(function_declarations=[
+            log_expense_declaration,
+            check_budget_declaration
+        ]),
+    ]
+    return available_tools

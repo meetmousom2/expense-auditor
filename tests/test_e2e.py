@@ -3,12 +3,12 @@ import httpx
 import json
 import os
 from agent.db import get_db_engine, Budget, Session
-from agent.tools import log_expense_tool
-from agent.agent_core import run_auditor  # We will call the agent directly for full control
+# 🟢 CHANGE 1: Use the _core version for setup, as the public tool is just a schema stub
+from agent.tools import _log_expense_core
+# 🟢 CHANGE 2: The directory is now 'agent', not 'agent_core'
+from agent.main import run_auditor
 
-# Load API key for local testing environment
 from dotenv import load_dotenv
-
 load_dotenv()
 
 
@@ -31,7 +31,7 @@ def setup_test_db(engine, user_id, initial_state):
 
         # Log a pre-existing expense if needed
         if initial_state.get('pre_expense_amount') > 0:
-            log_expense_tool(
+            _log_expense_core(
                 user_id=user_id,
                 vendor="Previous Bills",
                 amount=initial_state['pre_expense_amount'],
